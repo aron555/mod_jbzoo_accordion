@@ -1,0 +1,71 @@
+jQuery(function ($) {
+
+    /*Для нескольких модулей можно прописать класс модулю (у .sp-module) и привязываться к нему*/
+
+        let windowWidth = $(window).width(); // Ширина экрана для адаптивности
+        let containerWidth = $('.container').width(); // Ширина контейнера для дропдауна
+
+        // Menu All categories
+        const button = $(".dropdown-categories"), // Класс кнопки для открытия дропдауна (прописывается в модуле)
+            list = $('.zoo-list'); // Класс оболочки списка категории (в шаблоне модуля)
+
+        if ($(button)) {
+
+            var delay = 200, setTimeoutConst, // Задержка при наведении
+                delayOut = 200, setTimeoutConstOut; // Задержка при уходе мыши
+
+            //$(list).css('display', 'none'); // Скрыть оболочку со списком, если есть кнопка открытия (теперь есть настройка в модуле)
+
+            $(button)
+                .on('click', function () { // Показываем список при клике
+                    $(list).toggleClass('d-block');
+                })
+                .on('mouseout', function () { // При уходе мыши со списка
+
+                    clearTimeout(setTimeoutConst);
+
+                    $(document).on('click', function (e) { // Скрываем список при клике, если клик был вне кнопки, вне списка
+                        if (!$(button).is(e.target) && !$(list).is(e.target) && $(list).has(e.target).length === 0) {
+                            $(list).removeClass('d-block');
+                        }
+                        ;
+                    });
+                })
+            ;
+
+            if (windowWidth > 992) { // На больших экранах также
+
+                $(button)
+                    .on('mouseenter', function () { // При наведении на кнопку
+                        setTimeoutConst = setTimeout(function () { // С задержкой показываем/убираем список
+                            $(list).toggleClass('d-block');
+                        }, delay);
+                    })
+                    .on('mouseout', function () { // При уходе мыши с кнопки
+
+                        clearTimeout(setTimeoutConst);
+
+                        $(list).on('mouseout', function () { // При уходе мыши со списка скрываем список
+                            setTimeoutConstOut = setTimeout(function () {
+                                var isHoverList = $(list).is(":hover");
+                                if (isHoverList !== true) {
+                                    $(list).removeClass('d-block');
+                                }
+                            }, delayOut);
+                        });
+                    })
+
+                ;
+            }
+
+            $(list).css("width", containerWidth); // Задаем ширину списку равной ширине родительского контейнера (не всей ширине экрана)
+
+            if (windowWidth < 992) { // На маленьких экранах
+                let windowHeight = $(window).height(); // Задаем высоту экрана
+                $(list).css("max-height", windowHeight).css("overflow-y", "auto"); // И возможность прокручивать список
+            }
+
+        }
+
+    // END Menu All categories
+});

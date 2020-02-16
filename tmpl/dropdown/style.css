@@ -1,0 +1,49 @@
+.zoo-list .caret { /**/
+    top: 0px;
+    right: 4px;
+    cursor: pointer;
+    border: 1px solid silver;
+}
+
+.zoo-list .dropdown-toggle:after {
+    display: none;
+}
+
+.zoo-list a:not(.collapsed) .rotate-icon {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg)
+}
+
+.dropdown-link {
+    padding-right: 50px;
+}
+
+.add-padding-item .dropdown-link {
+    padding-right: 50px;
+}
+
+.dropdown-menu > .active > a {
+    background-color: transparent;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.zoo-list .dropdown-toggle:after {
+    position: absolute;
+    left: 94%;
+    margin-top: 6px;
+}
+
+@media (max-width: 960px) {
+    .dropright .dropdown-menu {
+        top: 100%;
+        right: 0;
+        left: auto;
+    }
+}
+
+
